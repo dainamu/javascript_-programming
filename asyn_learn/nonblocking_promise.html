@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nonBlocking</title>
+  </head>
+  <body>
+    <div id="time"></div>
+    <button onclick="sendRequest()">処理開始</button>
+  </body>
+  <script>
+    const cout = console.log;
+    setInterval(() => {
+      time.innerText = Date.now();
+    });
+
+    const sendRequest = () => {
+      const url = "https://httpbin.org/delay/1";
+      const responsePromise = fetch(url);
+      responsePromise.then((res) => {
+        console.log("fetcによる非同期通信完了");
+        console.log(res.status);
+      });
+      cout("sendRequestの実行完了");
+    };
+  </script>
+</html>

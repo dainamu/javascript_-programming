@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nonBlocking</title>
+  </head>
+  <body>
+    <div id="time"></div>
+    <button onclick="sendRequest()">処理開始</button>
+  </body>
+  <script>
+    setInterval(() => {
+      time.innerText = Date.now();
+    });
+
+    const load = () => {
+      console.log("通信が非同期で完了");
+    };
+    const sendRequest = () => {
+      const request = new XMLHttpRequest();
+      const url = "https://httpbin.org/delay/1";
+      request.open("GET", url);
+      request.onload = load;
+      request.send();
+      console.log("通信完了");
+    };
+  </script>
+</html>
