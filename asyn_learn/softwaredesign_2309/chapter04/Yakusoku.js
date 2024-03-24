@@ -38,8 +38,32 @@ class Yakusoku {
     }
   }
 
+  // thenは2つの関数を引数にとる
+  // Promiseの状態がfulfilledになったら1番目の関数が、
+  // rejectedになったら2番目の関数が実行される
+
   then(onFulfilled, onRejected) {
     // TODO: 実装
+    if (typeof onFulfilled !== "function") {
+      // identify function
+      // 関数でない場合
+
+      onFulfilled = (value) => {
+        return value; // 入力値をそのまま返すだけ
+      };
+    }
+    if (typeof onRejected !== "function") {
+      onRejected = (value) => {
+        // thrower function
+        throw value; // 入力値を例外として送出
+      };
+    }
+    if (this.state === "fulfilled") {
+      onFulfilled(this.resolvedValue);
+    }
+    if (this.state === "rejected") {
+      onRejected(this.rejectedValue);
+    }
   }
 
   catch(onRejected) {
