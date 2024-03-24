@@ -70,3 +70,33 @@ class Yakusoku {
     return this.then(undefined, onRejected);
   }
 }
+
+const fs = require("fs");
+function readFileYakusoku(path) {
+  return new Yakusoku((resolve, reject) => {
+    // Yakusokuのコンストラクタに関数を指定
+    fs.readFile(path, (err, data) => {
+      if (err === null) {
+        resolve(data);
+      } else {
+        reject(data);
+      }
+    });
+  });
+}
+
+readFileYakusoku("./a.txt").then(
+  (data) => {
+    console.log(data);
+  },
+  (err) => {
+    console.log(err);
+  }
+);
+
+fs.readFile("./a.txt", { encoding: "utf8" }, function (err, data) {
+  if (err !== null) {
+    console.log(err);
+  }
+  console.log(data);
+});
